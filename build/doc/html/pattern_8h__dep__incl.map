@@ -1,0 +1,8 @@
+<map id="pattern.h" name="pattern.h">
+<area shape="rect" id="node1" title=" " alt="" coords="75,5,156,32"/>
+<area shape="rect" id="node2" href="$gamemode_8h.html" title=" " alt="" coords="61,80,169,107"/>
+<area shape="rect" id="node3" href="$state_8h.html" title=" " alt="" coords="25,155,91,181"/>
+<area shape="rect" id="node6" href="$gamemodes_8h.html" title=" " alt="" coords="115,155,230,181"/>
+<area shape="rect" id="node4" href="$observer_8h.html" title=" " alt="" coords="13,229,103,256"/>
+<area shape="rect" id="node5" href="$doppelkopf_8h.html" title=" " alt="" coords="5,304,111,331"/>
+</map>

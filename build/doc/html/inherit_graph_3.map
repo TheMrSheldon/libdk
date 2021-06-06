@@ -1,0 +1,4 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classdk_1_1Gamemode.html" title="A gamemode dictates what cards are trump." alt="" coords="5,13,128,39"/>
+<area shape="rect" id="node2" href="$classdk_1_1gm_1_1TemplateGamemode.html" title="A gamemode with compile time constant trump patterns." alt="" coords="176,5,387,47"/>
+</map>

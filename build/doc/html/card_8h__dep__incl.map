@@ -1,0 +1,13 @@
+<map id="card.h" name="card.h">
+<area shape="rect" id="node1" title=" " alt="" coords="238,5,301,32"/>
+<area shape="rect" id="node2" href="$action_8h.html" title="Contains the dk::Action class." alt="" coords="5,80,80,107"/>
+<area shape="rect" id="node3" href="$player_8h.html" title=" " alt="" coords="56,155,131,181"/>
+<area shape="rect" id="node4" href="$doppelkopf_8h.html" title=" " alt="" coords="115,379,221,405"/>
+<area shape="rect" id="node5" href="$state_8h.html" title=" " alt="" coords="217,229,284,256"/>
+<area shape="rect" id="node7" href="$gamemode_8h.html" title=" " alt="" coords="269,155,377,181"/>
+<area shape="rect" id="node8" href="$gamemodes_8h.html" title=" " alt="" coords="339,229,453,256"/>
+<area shape="rect" id="node9" href="$pattern_8h.html" title=" " alt="" coords="307,80,389,107"/>
+<area shape="rect" id="node10" href="$command_8h.html" title=" " alt="" coords="465,80,626,107"/>
+<area shape="rect" id="node11" href="$dki__stream_8h.html" title=" " alt="" coords="522,155,691,181"/>
+<area shape="rect" id="node6" href="$observer_8h.html" title=" " alt="" coords="205,304,296,331"/>
+</map>
