@@ -6,6 +6,15 @@ set(CMAKE_CXX_COMPILE_FEATURES OFF)
 set(CMAKE_CXX_COMPILER "g++-10")
 #set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -fno-implicit-templates")
 
+find_program(CLANG_TIDY_COMMAND NAMES clang-tidy)
+if(NOT CLANG_TIDY_COMMAND)
+    message(WARNING "Could not find clang-tidy!")
+    set(CMAKE_CXX_CLANG_TIDY "" CACHE STRING "" FORCE)
+else()
+	#set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+	set(CMAKE_CXX_CLANG_TIDY clang-tidy; -header-filter=.; -warnings-as-errors=*;)
+endif()
+
 
 project(DoppelkopfUI VERSION 0.5.0)
 
