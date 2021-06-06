@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DOPPELKOPF_GAMEMODES_H
+#define DOPPELKOPF_GAMEMODES_H
 
 #include "card.h"
 #include "gamemode.h"
@@ -63,4 +64,6 @@ namespace dk::gm {
 	using Fleshless = TemplateGamemode<>;
 	
 	/** @} */
-}
+} // namespace dk::gm
+
+#endif

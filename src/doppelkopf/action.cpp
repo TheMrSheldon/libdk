@@ -1,10 +1,10 @@
 #include <doppelkopf/action.h>
 
-using namespace dk;
+using dk::Action;
 
-Action::Action() noexcept : type(ActionType::AnnounceReContra) {}
+Action::Action() noexcept : data(AnnouncementData{}) {}
 
-Action::Action(Card card) noexcept : type(ActionType::PlaceCard), placement({card}) {}
+Action::Action(Card card) noexcept : data(PlacementData{card}) {}
 
 Action Action::NewAnnouncement() noexcept {
 	return Action();

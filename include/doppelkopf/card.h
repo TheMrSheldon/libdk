@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DOPPELKOPF_CARD_H
+#define DOPPELKOPF_CARD_H
 
 /** @file
  * @brief 
@@ -26,11 +27,11 @@ namespace dk {
 		/**
 		 * @brief The suit of this card.
 		 */
-		Suit suit;
+		Suit suit; // NOLINT(misc-non-private-member-variables-in-classes)
 		/**
 		 * @brief The value of this card.
 		 */
-		Value value;
+		Value value; // NOLINT(misc-non-private-member-variables-in-classes)
 		
 		/**
 		 * @brief Checks if the other card is equal to this one.
@@ -81,22 +82,30 @@ namespace dk {
 		 * 
 		 * @return The pips of this card.
 		 */
-		constexpr int pips() const noexcept {
-			constexpr int pips[] = {
-				[static_cast<int>(Value::Ace)] = 11,
-				[static_cast<int>(Value::King)] = 4,
-				[static_cast<int>(Value::Queen)] = 3,
-				[static_cast<int>(Value::Jack)] = 2,
-				[static_cast<int>(Value::Ten)] = 10,
-				[static_cast<int>(Value::Nine)] = 0
-			};
-			return pips[static_cast<int>(value)];
+		[[nodiscard]] constexpr int pips() const noexcept {
+			switch (value){
+				case Value::Ace: return AcePips;
+				case Value::King: return KingPips;
+				case Value::Queen: return QueenPips;
+				case Value::Jack: return JackPips;
+				case Value::Ten: return TenPips;
+				case Value::Nine: return NinePips;
+				default: return -1;
+			}
 		}
 
 	private:
-		constexpr int numericValue() const noexcept {
-			return (int)value * 4 + (int)suit;
+		static constexpr int AcePips = 11;
+		static constexpr int KingPips = 4;
+		static constexpr int QueenPips = 3;
+		static constexpr int JackPips = 2;
+		static constexpr int TenPips = 10;
+		static constexpr int NinePips = 0;
+
+		[[nodiscard]] constexpr int numericValue() const noexcept {
+			return static_cast<int>(value) * 4 + static_cast<int>(suit);
 		}
 	};
-	
-}
+}  // namespace dk
+
+#endif

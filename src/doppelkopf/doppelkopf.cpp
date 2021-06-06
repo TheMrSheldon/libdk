@@ -2,12 +2,13 @@
 
 #include <doppelkopf/gamemodes.h>
 
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <random>
 
-using namespace dk;
+using dk::Doppelkopf, dk::Card, dk::Suit, dk::Player, dk::Observer, dk::ActionType;
 
-const Card Doppelkopf::AllCards[] = {
+const std::array<Card, Doppelkopf::DeckSize> Doppelkopf::AllCards = {
 	{Suit::Club, Value::Ace}, {Suit::Club, Value::King}, {Suit::Club, Value::Queen}, {Suit::Club, Value::Jack}, {Suit::Club, Value::Ten}, {Suit::Club, Value::Nine},
 	{Suit::Club, Value::Ace}, {Suit::Club, Value::King}, {Suit::Club, Value::Queen}, {Suit::Club, Value::Jack}, {Suit::Club, Value::Ten}, {Suit::Club, Value::Nine},
 	{Suit::Spade, Value::Ace}, {Suit::Spade, Value::King}, {Suit::Spade, Value::Queen}, {Suit::Spade, Value::Jack}, {Suit::Spade, Value::Ten}, {Suit::Spade, Value::Nine},
@@ -20,8 +21,10 @@ const Card Doppelkopf::AllCards[] = {
 
 void Doppelkopf::setupGame() noexcept {
 	constexpr size_t CardsPerHand = DeckSize / NumPlayers;
-	auto deck = std::vector<Card>(AllCards, AllCards+DeckSize);
-	std::random_shuffle(deck.begin(), deck.end());
+	auto deck = std::vector<Card>(std::begin(AllCards), std::end(AllCards));
+	std::random_device rd;
+    std::mt19937 g(rd());
+	std::shuffle(deck.begin(), deck.end(), g);
 	for (int i = 0; i < players.size(); ++i) {
 		auto& playerState = state.getPlayerState(i);
 		playerState.hand = std::vector<Card>(deck.begin()+i*CardsPerHand, deck.begin()+(i+1)*CardsPerHand);
@@ -40,13 +43,13 @@ void Doppelkopf::handleReservations() noexcept {
 		}
 	}
 	//TODO: check the reservations
-	state.setGameMode<gm::Default>(); //ignoring the reservations for now
+	state.setGameMode<dk::gm::Default>(); //ignoring the reservations for now
 }
 
 Doppelkopf::Doppelkopf(Player& player1, Player& player2, Player& player3, Player& player4) noexcept : players({player1, player2, player3, player4}) {}
 
 void Doppelkopf::addObserver(Observer& observer) noexcept {
-	observers.push_back(observer);
+	observers.emplace_back(observer);
 }
 
 void Doppelkopf::runGame() noexcept {

@@ -2,9 +2,9 @@
 
 #include <algorithm>
 
-using namespace dk;
+using dk::Gamemode, dk::Pattern, dk::Card;
 
-Gamemode::Gamemode(std::vector<Pattern> trumpPatterns) noexcept : trumpPatterns(trumpPatterns) {}
+Gamemode::Gamemode(std::vector<Pattern> trumpPatterns) noexcept : trumpPatterns(std::move(trumpPatterns)) {}
 
 bool Gamemode::isTrump(const Card& card) const noexcept {
 	return std::any_of(trumpPatterns.begin(), trumpPatterns.end(), [card](const auto& pattern){ return pattern.matches(card);});

@@ -12,7 +12,7 @@ if(NOT CLANG_TIDY_COMMAND)
     set(CMAKE_CXX_CLANG_TIDY "" CACHE STRING "" FORCE)
 else()
 	#set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-	set(CMAKE_CXX_CLANG_TIDY clang-tidy; -header-filter=.; -warnings-as-errors=*;)
+	set(CMAKE_CXX_CLANG_TIDY clang-tidy; -header-filter=.;)# -warnings-as-errors=*;)
 endif()
 
 

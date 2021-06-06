@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DOPPELKOPF_DOPPELKOPF_H
+#define DOPPELKOPF_DOPPELKOPF_H
 
 #include "card.h"
 #include "observer.h"
@@ -29,7 +30,7 @@ namespace dk {
 		 */
 		static constexpr size_t NumPlayers = 4;
 	private:
-		static const Card AllCards[DeckSize];
+		static const std::array<Card, DeckSize> AllCards;
 		
 		State state;
 		std::array<std::reference_wrapper<Player>, NumPlayers> players;
@@ -64,4 +65,6 @@ namespace dk {
 		 */
 		void runGame() noexcept;
 	};
-}
+} // namespace dk
+
+#endif

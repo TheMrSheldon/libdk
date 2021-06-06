@@ -1,6 +1,9 @@
-#pragma once
+#ifndef DOPPELKOPF_ACTION_H
+#define DOPPELKOPF_ACTION_H
 
 #include "card.h"
+
+#include <variant>
 
 /** @file
  * @brief Contains the dk::Action class.
@@ -21,24 +24,22 @@ namespace dk {
 	 */
 	class Action final {
 	private:
-		const ActionType type;
-		const union {
-			struct {
-				Card card;
-			} placement;
-			struct {} announcement;
+		struct PlacementData {
+			Card card;
 		};
+		struct AnnouncementData {};
+		std::variant<PlacementData, AnnouncementData> data;
 
 		Action() noexcept;
-		Action(Card card) noexcept;
+		explicit Action(Card card) noexcept;
 	public:
 		
 		/**
 		 * @brief Retrieves the ActionType of this action to differentiate if a card was placed or an announcement was made.
 		 * @return The type of action stored.
 		 */
-		constexpr ActionType getType() const noexcept {
-			return type;
+		[[nodiscard]] constexpr ActionType getType() const noexcept {
+			return std::holds_alternative<PlacementData>(data)? ActionType::PlaceCard : ActionType::AnnounceReContra;
 		}
 
 		/**
@@ -47,9 +48,10 @@ namespace dk {
 		 *   returns the card that was placed. The behavior is undefined if the action is not a placement action and this method
 		 *   should not be called then.
 		 * @return The card that is placed in this action.
+		 * @throws std::bad_variant_access if getType() is not ActionType::PlaceCard
 		 */
-		constexpr Card getPlacedCard() const noexcept {
-			return placement.card;
+		[[nodiscard]] constexpr Card getPlacedCard() const {
+			return std::get<PlacementData>(data).card;
 		}
 
 		/**
@@ -69,5 +71,6 @@ namespace dk {
 		 */
 		static Action NewPlacementAction(Card card) noexcept;
 	};
+} // namespace dk
 
-}
+#endif

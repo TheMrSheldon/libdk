@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <numeric>
 
-using namespace dk;
+using dk::State, dk::Card;
 
 template<typename C, typename T>
 static inline bool contains(const C& vec, const T& element) noexcept {
@@ -15,7 +15,7 @@ static inline bool contains(const C& vec, const T& element) noexcept {
 
 State::State() noexcept : gamemode(std::nullopt) {}
 
-State::PlayerState& State::getPlayerState(uint index) {
+State::PlayerState& State::getPlayerState(uint index) noexcept(false) {
 	return playerStates.at(index);
 }
 const State::PlayerState& State::getPlayerState(uint index) const {
@@ -50,11 +50,15 @@ void State::nextRound() noexcept {
 }
 
 bool State::isLegal(Card card) const noexcept {
-	const bool playerHasCard = contains(getHand(playersTurn), card);
-	const bool isFirstPlayer = firstPlayer == playersTurn;
-	const bool playerMustServe = !isFirstPlayer && canServe();
-	const bool cardServes = isFirstPlayer || gamemode->get()->serves(getPlacedCard(firstPlayer).value(), card);
-	return playerHasCard && !(playerMustServe && !cardServes);
+	try {
+		const bool playerHasCard = contains(getHand(playersTurn), card);
+		const bool isFirstPlayer = firstPlayer == playersTurn;
+		const bool playerMustServe = !isFirstPlayer && canServe();
+		const bool cardServes = isFirstPlayer || gamemode->get()->serves(getPlacedCard(firstPlayer).value(), card);
+		return playerHasCard && !(playerMustServe && !cardServes);
+	} catch(std::exception const& e) {
+		return false;
+	}
 }
 
 bool State::placeCard(Card card) noexcept {
@@ -63,25 +67,29 @@ bool State::placeCard(Card card) noexcept {
 		if (isRoundOver())
 			nextRound();
 		else
-			playersTurn = (playersTurn+1) % playerStates.size();
+			playersTurn = (playersTurn+1) % static_cast<int>(playerStates.size());
 	}
 	return legal;
 }
 
 bool State::canServe() const noexcept {
-	if (firstPlayer == playersTurn)
-		return true;
-	const auto& gm = *gamemode->get();
-	const auto& hand = getHand(playersTurn);
-	const auto& toserve = getPlacedCard(firstPlayer).value();
-	return std::any_of(hand.begin(), hand.end(), [gm, toserve](const auto& card){ return gm.serves(toserve, card); });
+	try {
+		if (firstPlayer == playersTurn)
+			return true;
+		const auto& gm = **gamemode;
+		const auto& hand = getHand(playersTurn);
+		const auto& toserve = getPlacedCard(firstPlayer).value();
+		return std::any_of(hand.begin(), hand.end(), [gm, toserve](const auto& card){ return gm.serves(toserve, card); });
+	} catch (std::exception const& e) {
+		return false;
+	}
 }
 
 int State::getTurn() const noexcept {
 	return playersTurn;
 }
 
-std::optional<Card> State::getPlacedCard(unsigned player) const {
+const std::optional<Card>& State::getPlacedCard(unsigned player) const {
 	return getPlayerState(player).placed;
 }
 

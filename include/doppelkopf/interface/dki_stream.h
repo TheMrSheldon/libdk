@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DOPPELKOPF_INTERFACE_DKI_STREAM_H
+#define DOPPELKOPF_INTERFACE_DKI_STREAM_H
 
 #include "command.h"
 
@@ -77,7 +78,7 @@ namespace dki {
 		 * @param b 
 		 * @return const dki_stream& 
 		 */
-		const dki_stream& operator<<(const bool b) const noexcept;
+		const dki_stream& operator<<(const bool& b) const noexcept;
 
 		/**
 		 * @brief TODO: document
@@ -105,4 +106,6 @@ namespace dki {
 		 */
 		const dki_stream& operator>>(bool& b) const noexcept;
 	};
-}
+} // namespace dki
+
+#endif
