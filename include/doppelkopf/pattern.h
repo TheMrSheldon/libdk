@@ -16,7 +16,6 @@ namespace dk {
 	 *  value or the pattern's value is a wildcard.
 	 */
 	struct Pattern final {
-	private:
 		/**
 		 * @brief The suit this pattern matches against or -1 for wildcard.
 		 */
@@ -30,8 +29,7 @@ namespace dk {
 		 * @brief Constructs a new Pattern for the desired suit and value.
 		 */
 		constexpr Pattern(int suit, int value) noexcept : suit(suit), value(value) {}
-
-	public:
+		
 		/**
 		 * @brief Checks if this pattern matches the provided card.
 		 * 

@@ -9,14 +9,14 @@
 using dk::Doppelkopf, dk::Card, dk::Suit, dk::Player, dk::Observer, dk::ActionType;
 
 const std::array<Card, Doppelkopf::DeckSize> Doppelkopf::AllCards = {
-	{Suit::Club, Value::Ace}, {Suit::Club, Value::King}, {Suit::Club, Value::Queen}, {Suit::Club, Value::Jack}, {Suit::Club, Value::Ten}, {Suit::Club, Value::Nine},
-	{Suit::Club, Value::Ace}, {Suit::Club, Value::King}, {Suit::Club, Value::Queen}, {Suit::Club, Value::Jack}, {Suit::Club, Value::Ten}, {Suit::Club, Value::Nine},
-	{Suit::Spade, Value::Ace}, {Suit::Spade, Value::King}, {Suit::Spade, Value::Queen}, {Suit::Spade, Value::Jack}, {Suit::Spade, Value::Ten}, {Suit::Spade, Value::Nine},
-	{Suit::Spade, Value::Ace}, {Suit::Spade, Value::King}, {Suit::Spade, Value::Queen}, {Suit::Spade, Value::Jack}, {Suit::Spade, Value::Ten}, {Suit::Spade, Value::Nine},
-	{Suit::Heart, Value::Ace}, {Suit::Heart, Value::King}, {Suit::Heart, Value::Queen}, {Suit::Heart, Value::Jack}, {Suit::Heart, Value::Ten}, {Suit::Heart, Value::Nine},
-	{Suit::Heart, Value::Ace}, {Suit::Heart, Value::King}, {Suit::Heart, Value::Queen}, {Suit::Heart, Value::Jack}, {Suit::Heart, Value::Ten}, {Suit::Heart, Value::Nine},
-	{Suit::Diamond, Value::Ace}, {Suit::Diamond, Value::King}, {Suit::Diamond, Value::Queen}, {Suit::Diamond, Value::Jack}, {Suit::Diamond, Value::Ten}, {Suit::Diamond, Value::Nine},
-	{Suit::Diamond, Value::Ace}, {Suit::Diamond, Value::King}, {Suit::Diamond, Value::Queen}, {Suit::Diamond, Value::Jack}, {Suit::Diamond, Value::Ten}, {Suit::Diamond, Value::Nine}
+	Card{Suit::Club, Value::Ace}, Card{Suit::Club, Value::King}, Card{Suit::Club, Value::Queen}, Card{Suit::Club, Value::Jack}, Card{Suit::Club, Value::Ten}, Card{Suit::Club, Value::Nine},
+	Card{Suit::Club, Value::Ace}, Card{Suit::Club, Value::King}, Card{Suit::Club, Value::Queen}, Card{Suit::Club, Value::Jack}, Card{Suit::Club, Value::Ten}, Card{Suit::Club, Value::Nine},
+	Card{Suit::Spade, Value::Ace}, Card{Suit::Spade, Value::King}, Card{Suit::Spade, Value::Queen}, Card{Suit::Spade, Value::Jack}, Card{Suit::Spade, Value::Ten}, Card{Suit::Spade, Value::Nine},
+	Card{Suit::Spade, Value::Ace}, Card{Suit::Spade, Value::King}, Card{Suit::Spade, Value::Queen}, Card{Suit::Spade, Value::Jack}, Card{Suit::Spade, Value::Ten}, Card{Suit::Spade, Value::Nine},
+	Card{Suit::Heart, Value::Ace}, Card{Suit::Heart, Value::King}, Card{Suit::Heart, Value::Queen}, Card{Suit::Heart, Value::Jack}, Card{Suit::Heart, Value::Ten}, Card{Suit::Heart, Value::Nine},
+	Card{Suit::Heart, Value::Ace}, Card{Suit::Heart, Value::King}, Card{Suit::Heart, Value::Queen}, Card{Suit::Heart, Value::Jack}, Card{Suit::Heart, Value::Ten}, Card{Suit::Heart, Value::Nine},
+	Card{Suit::Diamond, Value::Ace}, Card{Suit::Diamond, Value::King}, Card{Suit::Diamond, Value::Queen}, Card{Suit::Diamond, Value::Jack}, Card{Suit::Diamond, Value::Ten}, Card{Suit::Diamond, Value::Nine},
+	Card{Suit::Diamond, Value::Ace}, Card{Suit::Diamond, Value::King}, Card{Suit::Diamond, Value::Queen}, Card{Suit::Diamond, Value::Jack}, Card{Suit::Diamond, Value::Ten}, Card{Suit::Diamond, Value::Nine}
 };
 
 void Doppelkopf::setupGame() noexcept {
