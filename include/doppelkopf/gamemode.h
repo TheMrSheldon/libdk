@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DOPPELKOPF_GAMEMODE_H
+#define DOPPELKOPF_GAMEMODE_H
 
 #include "card.h"
 #include "pattern.h"
@@ -28,7 +29,7 @@ namespace dk {
 		 * 
 		 * @param trumpPatterns 
 		 */
-		Gamemode(std::vector<Pattern> trumpPatterns) noexcept;
+		explicit Gamemode(std::vector<Pattern> trumpPatterns) noexcept;
 		
 		/**
 		 * @brief Checks if the provided card is considered trump in this gamemode.
@@ -37,7 +38,7 @@ namespace dk {
 		 * @return true 
 		 * @return false 
 		 */
-		bool isTrump(const Card& card) const noexcept;
+		[[nodiscard]] bool isTrump(const Card& card) const noexcept;
 
 		/**
 		 * @brief Checks if the provided card serves the other.
@@ -47,9 +48,19 @@ namespace dk {
 		 * @return true 
 		 * @return false 
 		 */
-		bool serves(const Card& served, const Card& other) const noexcept;
+		[[nodiscard]] bool serves(const Card& served, const Card& other) const noexcept;
 		
-		bool beats(const Card& tobeat, const Card& other) const noexcept;
+		/**
+		 * @brief Checks if the provided card beats the other.
+		 * 
+		 * @param tobeat 
+		 * @param other 
+		 * @return true 
+		 * @return false 
+		 */
+		[[nodiscard]] bool beats(const Card& tobeat, const Card& other) const noexcept;
 	};
 
-}
+} // namespace dk
+
+#endif

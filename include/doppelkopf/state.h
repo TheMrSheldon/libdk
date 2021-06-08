@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DOPPELKOPF_STATE_H
+#define DOPPELKOPF_STATE_H
 
 #include "card.h"
 #include "gamemode.h"
@@ -31,7 +32,7 @@ namespace dk {
 		struct PlayerState {
 			std::vector<Card> hand;
 			std::optional<Card> placed;
-			int score;
+			int score = 0;
 		};
 		std::array<PlayerState, 4> playerStates;
 		
@@ -49,11 +50,11 @@ namespace dk {
 			gamemode = std::make_optional<std::unique_ptr<Gamemode>>(std::move(ptr));
 		}
 		
-		PlayerState& getPlayerState(uint index);
-		const PlayerState& getPlayerState(uint index) const;
-		bool isRoundOver() const noexcept;
-		bool isGameOver() const noexcept;
-		int getRoundWinner() const noexcept;
+		PlayerState& getPlayerState(uint index) noexcept(false);
+		[[nodiscard]] const PlayerState& getPlayerState(uint index) const;
+		[[nodiscard]] bool isRoundOver() const noexcept;
+		[[nodiscard]] bool isGameOver() const noexcept;
+		[[nodiscard]] int getRoundWinner() const noexcept;
 		void nextRound() noexcept;
 
 		State() noexcept;
@@ -70,7 +71,7 @@ namespace dk {
 		 * @return true iff placing the specified card is legal in the this gamestate under the rules specified by the current gamemode.
 		 */
 
-		bool isLegal(Card card) const noexcept;
+		[[nodiscard]] bool isLegal(Card card) const noexcept;
 		/**
 		 * @brief Places the provided card as the player whose turn it is.
 		 * 
@@ -91,28 +92,30 @@ namespace dk {
 		 * @return true iff the current player can serve the center. 
 		 * @see Gamemode::serves
 		 */
-		bool canServe() const noexcept;
+		[[nodiscard]] bool canServe() const noexcept;
 
 		/**
 		 * @brief Retrieves the index of the player whose turn it is.
 		 * 
 		 * @return int the index of the player whose turn it is (ranged from 0 to 3).
 		 */
-		int getTurn() const noexcept;
+		[[nodiscard]] int getTurn() const noexcept;
 		/**
 		 * @brief Retrieves the card the player has placed in the middle in the current round.
 		 * 
 		 * @param player 
 		 * @return std::optional<Card> 
 		 */
-		std::optional<Card> getPlacedCard(unsigned player) const;
+		[[nodiscard]] const std::optional<Card>& getPlacedCard(unsigned player) const;
 		/**
 		 * @brief Retrieves the cards the player currently holds.
 		 * 
 		 * @param player 
 		 * @return const std::vector<Card>& 
 		 */
-		const std::vector<Card>& getHand(unsigned player) const;
+		[[nodiscard]] const std::vector<Card>& getHand(unsigned player) const;
 	};
 
-}
+} // namespace dk
+
+#endif

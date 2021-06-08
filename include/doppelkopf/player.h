@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DOPPELKOPF_PLAYER_H
+#define DOPPELKOPF_PLAYER_H
 
 #include "action.h"
 #include "card.h"
@@ -47,4 +48,6 @@ namespace dk {
 		virtual Action getAction() = 0;
 	};
 
-}
+} // namespace dk
+
+#endif

@@ -1,0 +1,1 @@
+Checks: '*,-modernize-use-trailing-return-type,-fuchsia-*,misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic,-google-runtime-references,-*-braces-around-statements'

@@ -1,11 +1,10 @@
-//#pragma once
-
 #include <doppelkopf/interface/dki_stream.h>
 
-#include <vector>
 #include <algorithm>
 #include <cctype>
+#include <vector>
 
+//Taken from here: https://stackoverflow.com/a/6245777
 namespace aux {
 	template<std::size_t...>
 	struct seq {};
@@ -17,14 +16,14 @@ namespace aux {
 	struct gen_seq<0, Is...> : seq<Is...> {};
 	
 	template<class Tuple, std::size_t... Is>
-	static inline void printTuple(const dki::dki_stream& dkstream, std::ostream& ostream, const Tuple& t, aux::seq<Is...>) {
-		using bin=int[];
+	static inline void printTuple(const dki::dki_stream& dkstream, std::ostream& ostream, const Tuple& t, aux::seq<Is...>) { // NOLINT(readability-named-parameter)
+		using bin=int[]; // NOLINT(cppcoreguidelines-avoid-c-arrays,hicpp-avoid-c-arrays,-warnings-as-errors,modernize-avoid-c-arrays,-warnings-as-errors)
 		(void)bin{0, ((void)((ostream << (Is == 0? "" : " ")), (dkstream << std::get<Is>(t))), 0)...};
 	}
 
 	template<class Tuple, std::size_t... Is>
-	static inline void readTuple(dki::dki_stream& dkstream, Tuple& t, aux::seq<Is...>) {
-		using bin=int[];
+	static inline void readTuple(dki::dki_stream& dkstream, Tuple& t, aux::seq<Is...>) { // NOLINT(readability-named-parameter)
+		using bin=int[]; // NOLINT(cppcoreguidelines-avoid-c-arrays,hicpp-avoid-c-arrays,-warnings-as-errors,modernize-avoid-c-arrays,-warnings-as-errors)
 		(void)bin{0, ((void)(dkstream >> std::get<Is>(t)), 0)...};
 	}
 
@@ -37,7 +36,7 @@ namespace aux {
 		default: return "";
 		}
 	}
-}
+} // namespace aux
 
 namespace dki {
 	const dki_stream& dki_stream::operator<<(const std::string& str) const noexcept {
@@ -52,25 +51,26 @@ namespace dki {
 		return *this;
 	}
 	const dki_stream& dki_stream::operator<<(const dk::Card& card) const noexcept {
-		static const char suits[] = {
-			[(int)dk::Suit::Club] = 'C',
-			[(int)dk::Suit::Spade] = 'S',
-			[(int)dk::Suit::Heart] = 'H',
-			[(int)dk::Suit::Diamond] = 'D'
-		};
-		static const char* const values[] = {
-			[(int)dk::Value::Ace] = "A",
-			[(int)dk::Value::King] = "K",
-			[(int)dk::Value::Queen] = "Q",
-			[(int)dk::Value::Jack] = "J",
-			[(int)dk::Value::Ten] = "10",
-			[(int)dk::Value::Nine] = "9"
-		};
-		ostream << suits[(int)card.suit] << values[(int)card.value];
+		switch (card.suit){
+			case dk::Suit::Club: ostream << 'C'; break;
+			case dk::Suit::Spade: ostream << 'S'; break;
+			case dk::Suit::Heart: ostream << 'H'; break;
+			case dk::Suit::Diamond: ostream << 'D'; break;
+			default: ostream <<  '-'; break;
+		}
+		switch(card.value) {
+			case dk::Value::Ace: ostream << 'A'; break;
+			case dk::Value::King: ostream << 'K'; break;
+			case dk::Value::Queen: ostream << 'Q'; break;
+			case dk::Value::Jack: ostream << 'J'; break;
+			case dk::Value::Ten: ostream << "10"; break;
+			case dk::Value::Nine: ostream << '9'; break;
+			default: ostream << '-'; break;
+		}
 		return *this;
 	}
-	const dki_stream& dki_stream::operator<<(const bool b) const noexcept {
-		ostream << b? '1':'0';
+	const dki_stream& dki_stream::operator<<(const bool& b) const noexcept {
+		ostream << (b? '1':'0');
 		return *this;
 	}
 
@@ -103,7 +103,7 @@ namespace dki {
 			istream.ignore();
 			str = "";
 			while (istream.peek() != '"' && istream.peek() != EOF)
-				str += istream.get();
+				str += static_cast<char>(istream.get());
 			istream.ignore();
 		} else
 			istream >> str;
@@ -118,4 +118,4 @@ namespace dki {
 	template const dki_stream& dki_stream::operator<<(const LogCmd& command) const noexcept;
 	template const dki_stream& dki_stream::operator<<(const SetStateCmd& command) const noexcept;
 	template const dki_stream& dki_stream::operator<<(const HasReservationsCmd& command) const noexcept;
-}
+} // namespace dki

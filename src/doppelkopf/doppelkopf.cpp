@@ -2,26 +2,29 @@
 
 #include <doppelkopf/gamemodes.h>
 
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <random>
 
-using namespace dk;
+using dk::Doppelkopf, dk::Card, dk::Suit, dk::Player, dk::Observer, dk::ActionType;
 
-const Card Doppelkopf::AllCards[] = {
-	{Suit::Club, Value::Ace}, {Suit::Club, Value::King}, {Suit::Club, Value::Queen}, {Suit::Club, Value::Jack}, {Suit::Club, Value::Ten}, {Suit::Club, Value::Nine},
-	{Suit::Club, Value::Ace}, {Suit::Club, Value::King}, {Suit::Club, Value::Queen}, {Suit::Club, Value::Jack}, {Suit::Club, Value::Ten}, {Suit::Club, Value::Nine},
-	{Suit::Spade, Value::Ace}, {Suit::Spade, Value::King}, {Suit::Spade, Value::Queen}, {Suit::Spade, Value::Jack}, {Suit::Spade, Value::Ten}, {Suit::Spade, Value::Nine},
-	{Suit::Spade, Value::Ace}, {Suit::Spade, Value::King}, {Suit::Spade, Value::Queen}, {Suit::Spade, Value::Jack}, {Suit::Spade, Value::Ten}, {Suit::Spade, Value::Nine},
-	{Suit::Heart, Value::Ace}, {Suit::Heart, Value::King}, {Suit::Heart, Value::Queen}, {Suit::Heart, Value::Jack}, {Suit::Heart, Value::Ten}, {Suit::Heart, Value::Nine},
-	{Suit::Heart, Value::Ace}, {Suit::Heart, Value::King}, {Suit::Heart, Value::Queen}, {Suit::Heart, Value::Jack}, {Suit::Heart, Value::Ten}, {Suit::Heart, Value::Nine},
-	{Suit::Diamond, Value::Ace}, {Suit::Diamond, Value::King}, {Suit::Diamond, Value::Queen}, {Suit::Diamond, Value::Jack}, {Suit::Diamond, Value::Ten}, {Suit::Diamond, Value::Nine},
-	{Suit::Diamond, Value::Ace}, {Suit::Diamond, Value::King}, {Suit::Diamond, Value::Queen}, {Suit::Diamond, Value::Jack}, {Suit::Diamond, Value::Ten}, {Suit::Diamond, Value::Nine}
+const std::array<Card, Doppelkopf::DeckSize> Doppelkopf::AllCards = {
+	Card{Suit::Club, Value::Ace}, Card{Suit::Club, Value::King}, Card{Suit::Club, Value::Queen}, Card{Suit::Club, Value::Jack}, Card{Suit::Club, Value::Ten}, Card{Suit::Club, Value::Nine},
+	Card{Suit::Club, Value::Ace}, Card{Suit::Club, Value::King}, Card{Suit::Club, Value::Queen}, Card{Suit::Club, Value::Jack}, Card{Suit::Club, Value::Ten}, Card{Suit::Club, Value::Nine},
+	Card{Suit::Spade, Value::Ace}, Card{Suit::Spade, Value::King}, Card{Suit::Spade, Value::Queen}, Card{Suit::Spade, Value::Jack}, Card{Suit::Spade, Value::Ten}, Card{Suit::Spade, Value::Nine},
+	Card{Suit::Spade, Value::Ace}, Card{Suit::Spade, Value::King}, Card{Suit::Spade, Value::Queen}, Card{Suit::Spade, Value::Jack}, Card{Suit::Spade, Value::Ten}, Card{Suit::Spade, Value::Nine},
+	Card{Suit::Heart, Value::Ace}, Card{Suit::Heart, Value::King}, Card{Suit::Heart, Value::Queen}, Card{Suit::Heart, Value::Jack}, Card{Suit::Heart, Value::Ten}, Card{Suit::Heart, Value::Nine},
+	Card{Suit::Heart, Value::Ace}, Card{Suit::Heart, Value::King}, Card{Suit::Heart, Value::Queen}, Card{Suit::Heart, Value::Jack}, Card{Suit::Heart, Value::Ten}, Card{Suit::Heart, Value::Nine},
+	Card{Suit::Diamond, Value::Ace}, Card{Suit::Diamond, Value::King}, Card{Suit::Diamond, Value::Queen}, Card{Suit::Diamond, Value::Jack}, Card{Suit::Diamond, Value::Ten}, Card{Suit::Diamond, Value::Nine},
+	Card{Suit::Diamond, Value::Ace}, Card{Suit::Diamond, Value::King}, Card{Suit::Diamond, Value::Queen}, Card{Suit::Diamond, Value::Jack}, Card{Suit::Diamond, Value::Ten}, Card{Suit::Diamond, Value::Nine}
 };
 
 void Doppelkopf::setupGame() noexcept {
 	constexpr size_t CardsPerHand = DeckSize / NumPlayers;
-	auto deck = std::vector<Card>(AllCards, AllCards+DeckSize);
-	std::random_shuffle(deck.begin(), deck.end());
+	auto deck = std::vector<Card>(std::begin(AllCards), std::end(AllCards));
+	std::random_device rd;
+    std::mt19937 g(rd());
+	std::shuffle(deck.begin(), deck.end(), g);
 	for (int i = 0; i < players.size(); ++i) {
 		auto& playerState = state.getPlayerState(i);
 		playerState.hand = std::vector<Card>(deck.begin()+i*CardsPerHand, deck.begin()+(i+1)*CardsPerHand);
@@ -40,13 +43,13 @@ void Doppelkopf::handleReservations() noexcept {
 		}
 	}
 	//TODO: check the reservations
-	state.setGameMode<gm::Default>(); //ignoring the reservations for now
+	state.setGameMode<dk::gm::Default>(); //ignoring the reservations for now
 }
 
 Doppelkopf::Doppelkopf(Player& player1, Player& player2, Player& player3, Player& player4) noexcept : players({player1, player2, player3, player4}) {}
 
 void Doppelkopf::addObserver(Observer& observer) noexcept {
-	observers.push_back(observer);
+	observers.emplace_back(observer);
 }
 
 void Doppelkopf::runGame() noexcept {

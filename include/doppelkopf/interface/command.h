@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DOPPELKOPF_INTERFACE_COMMAND_H
+#define DOPPELKOPF_INTERFACE_COMMAND_H
 
 #include <doppelkopf/card.h>
 
@@ -45,19 +46,19 @@ namespace dki {
 		/**
 		 * @brief The command's arguments;
 		 */
-		std::tuple<Args...> args;
+		std::tuple<Args...> args; // NOLINT(misc-non-private-member-variables-in-classes)
 		
 		/**
 		 * @brief Constructs a new command instance with default arguments.
 		 */
-		Command() {}
+		Command() = default;
 
 		/**
 		 * @brief Construct a new command instance with the provided arguments.
 		 * 
 		 * @param args 
 		 */
-		Command(std::tuple<Args...> args) noexcept : args(args) {}
+		explicit Command(std::tuple<Args...> args) noexcept : args(args) {}
 	};
 	
 	/**
@@ -76,4 +77,6 @@ namespace dki {
 	using HasReservationsCmd = Command<CommandID::HasReservations>;
 	
 	///@}
-}
+} // namespace dki
+
+#endif

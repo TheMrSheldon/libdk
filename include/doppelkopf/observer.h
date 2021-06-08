@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DOPPELKOPF_OBSERVER_H
+#define DOPPELKOPF_OBSERVER_H
 
 #include "state.h"
 
@@ -37,4 +38,6 @@ namespace dk {
 		 */
 		virtual void notifyAnnouncement(int player) noexcept = 0;
 	};
-}
+} // namespace dk
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DOPPELKOPF_PATTERN_H
+#define DOPPELKOPF_PATTERN_H
 
 #include "card.h"
 
@@ -29,7 +30,7 @@ namespace dk {
 		 * @brief Constructs a new Pattern for the desired suit and value.
 		 */
 		constexpr Pattern(int suit, int value) noexcept : suit(suit), value(value) {}
-
+		
 	public:
 		/**
 		 * @brief Checks if this pattern matches the provided card.
@@ -38,19 +39,21 @@ namespace dk {
 		 * @return true 
 		 * @return false 
 		 */
-		bool matches(const Card& card) const noexcept;
+		[[nodiscard]] bool matches(const Card& card) const noexcept;
 
 		/**
 		 * @brief Constructs a new Pattern with the fixed suit and value.
 		 */
-		constexpr Pattern(Suit suit, Value value) noexcept : Pattern((int)suit, (int)value) {}
+		constexpr Pattern(Suit suit, Value value) noexcept : Pattern(static_cast<int>(suit), static_cast<int>(value)) {}
 		/**
 		 * @brief Constructs a new Pattern with the fixed suit and arbitrary value.
 		 */
-		constexpr Pattern(Suit suit) noexcept : Pattern((int)suit, -1) {}
+		explicit constexpr Pattern(Suit suit) noexcept : Pattern(static_cast<int>(suit), -1) {}
 		/**
 		 * @brief Constructs a new Pattern with the fixed value and arbitrary suit.
 		 */
-		constexpr Pattern(Value value) noexcept : Pattern(-1, (int)value) {}
+		explicit constexpr Pattern(Value value) noexcept : Pattern(-1, static_cast<int>(value)) {}
 	};
-}
+} // namespace dk
+
+#endif
