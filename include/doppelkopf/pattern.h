@@ -25,11 +25,13 @@ namespace dk {
 		 */
 		const int value;
 		
+	private:
 		/**
 		 * @brief Constructs a new Pattern for the desired suit and value.
 		 */
 		constexpr Pattern(int suit, int value) noexcept : suit(suit), value(value) {}
 		
+	public:
 		/**
 		 * @brief Checks if this pattern matches the provided card.
 		 * 
