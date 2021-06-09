@@ -34,9 +34,8 @@ namespace dk {
 		/**
 		 * @brief Checks if the provided card is considered trump in this gamemode.
 		 * 
-		 * @param card 
-		 * @return true 
-		 * @return false 
+		 * @param card the card to be checked for if it is trump.
+		 * @return true if the card matches any of the previously declared trump patterns for this gamemode.
 		 */
 		[[nodiscard]] bool isTrump(const Card& card) const noexcept;
 
@@ -46,7 +45,6 @@ namespace dk {
 		 * @param served 
 		 * @param other 
 		 * @return true 
-		 * @return false 
 		 */
 		[[nodiscard]] bool serves(const Card& served, const Card& other) const noexcept;
 		
@@ -56,7 +54,6 @@ namespace dk {
 		 * @param tobeat 
 		 * @param other 
 		 * @return true 
-		 * @return false 
 		 */
 		[[nodiscard]] bool beats(const Card& tobeat, const Card& other) const noexcept;
 	};

@@ -26,15 +26,15 @@ namespace dk {
 		/**
 		 * @brief Notifies the observer that a card was played.
 		 * 
-		 * @param player 
-		 * @param card 
+		 * @param player the player who placed the card.
+		 * @param card the card that was placed.
 		 */
 		virtual void notifyPlaceCard(int player, Card card) noexcept = 0;
 
 		/**
 		 * @brief Notifies the observer that a player made an announcement.
 		 * 
-		 * @param player 
+		 * @param player the player who made an announcement.
 		 */
 		virtual void notifyAnnouncement(int player) noexcept = 0;
 	};

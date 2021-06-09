@@ -80,7 +80,7 @@ namespace dk {
 		/**
 		 * @brief Returns the pips of this card. The pips denote the score of the card that is tallied up to determine the winner.
 		 * 
-		 * @return The pips of this card.
+		 * @return The pips of this card or -1 if the Card::value is invalid.
 		 */
 		[[nodiscard]] constexpr int pips() const noexcept {
 			switch (value){

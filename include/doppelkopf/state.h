@@ -17,8 +17,7 @@ namespace dk {
 	
 	/**
 	 * @brief The state stores information about the player whose turn it is, the placed cards, the selected gamemode (solos, ...) and the re and contra announcements.
-	 * 
-	 * The State class implements the core logic of the game with respect to the provided gamemode. Players are represented as indexes (0 to 3). The state then stores
+	 * @details The State class implements the core logic of the game with respect to the provided gamemode. Players are represented as indexes (0 to 3). The state then stores
 	 * the player whose turn it is currently, the hand for each player, the placed center cards, and the score of each player. It additionally stores the gamemode to
 	 * check the legality of performed moves.
 	 */
@@ -38,8 +37,7 @@ namespace dk {
 		
 		/**
 		 * @brief Sets the gamemode for this gemestate.
-		 * 
-		 * This method should be called **exactly once** per game to set the gamemode after the players' announcements after the cards were dealt.
+		 * @details This method should be called **exactly once** per game to set the gamemode after the players' announcements after the cards were dealt.
 		 * 
 		 * @tparam Mode the type of the gamemode to be instantiated for this gamestate.
 		 */
@@ -61,8 +59,7 @@ namespace dk {
 	public:
 		/**
 		 * @brief Checks if placing the provided card is legal for the player whose turn it is.
-		 * 
-		 * Checks if placing the provided card is legal given this gamestate and gamemode. The placement is legal iff all the following requirements are met:
+		 * @details Checks if placing the provided card is legal given this gamestate and gamemode. The placement is legal iff all the following requirements are met:
 		 *  - the player whose turn it is holds the card in his hand
 		 *  - the player can serve and the card is serving
 		 *  - the player can't serve
@@ -74,8 +71,7 @@ namespace dk {
 		[[nodiscard]] bool isLegal(Card card) const noexcept;
 		/**
 		 * @brief Places the provided card as the player whose turn it is.
-		 * 
-		 * Checks if the current card can be placed by the current player according to the gamemode. If it is possible the card will be placed
+		 * @details Checks if the current card can be placed by the current player according to the gamemode. If it is possible the card will be placed
 		 * and this state is updated accordingly. If the round is over after the turn, the next round is started and the first player to play
 		 * a card is picked to be the winner of the current round. If the round is not over the player whose turn it is is advanced by one.
 		 * 

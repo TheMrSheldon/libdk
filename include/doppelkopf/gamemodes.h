@@ -26,6 +26,7 @@ namespace dk::gm {
 	 */
 	/**
 	 * @brief A gamemode with compile time constant trump patterns.
+	 * @details A template gamemode is a dk::Gamemode but with the trump patterns specified within the type as template arguments.
 	 * 
 	 * @tparam trumps Patterns describing the trump cards.
 	 */

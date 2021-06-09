@@ -21,6 +21,9 @@ namespace dk {
 
 	/**
 	 * @brief Players can perform actions on the current state.
+	 * @details An action may be either be an announcement of "re" or "contra" or the placement of a card from the hand.
+	 * 
+	 * @see ActionType
 	 */
 	class Action final {
 	private:
