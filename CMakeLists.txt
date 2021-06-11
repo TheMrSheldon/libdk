@@ -13,14 +13,32 @@ include(CTest)
 enable_testing()
 
 add_library(doppelkopf SHARED src/doppelkopf/action.cpp src/doppelkopf/doppelkopf.cpp src/doppelkopf/gamemode.cpp src/doppelkopf/pattern.cpp src/doppelkopf/state.cpp src/doppelkopf/interface/dki_stream.cpp)
+target_include_directories(doppelkopf PUBLIC
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
+	$<INSTALL_INTERFACE:include>
+)
+
 add_executable(DoppelkopfUI src/main.cpp)
 
-include_directories(PUBLIC include)
-target_link_libraries(DoppelkopfUI doppelkopf)
+target_link_libraries(DoppelkopfUI PRIVATE doppelkopf)
 
 ##########################################################################################
 # Libraries
 ##########################################################################################
+
+#Needs boost: sudo apt-get install libboost-all-dev
+FetchContent_Declare(
+	simple_websocket_server_lib
+	GIT_REPOSITORY https://gitlab.com/eidheim/Simple-WebSocket-Server.git
+	GIT_TAG v2.0.2
+)
+FetchContent_MakeAvailable(simple_websocket_server_lib)
+FetchContent_GetProperties(simple_websocket_server_lib)
+target_include_directories(simple-websocket-server INTERFACE ${simple_websocket_server_lib_SOURCE_DIR}/>)
+target_link_libraries(DoppelkopfUI PRIVATE simple-websocket-server)
+
+find_package(nlohmann_json 3.2.0 REQUIRED) #https://github.com/nlohmann/json
+target_link_libraries(doppelkopf PRIVATE nlohmann_json::nlohmann_json)
 
 ##########################################################################################
 # DOXYGEN
