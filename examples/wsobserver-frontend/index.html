@@ -1,0 +1,76 @@
+<html>
+	<head>
+		<script src="cards.js"></script>
+		<script src="dki_ws.js"></script>
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="cards.css">
+		<title>Doppelkopf - WebSocket Observer</title>
+	</head>
+	<body>
+		<h1>Doppelkopf &ndash; Observer</h1>
+		Address: <input placeholder="wss://www.example.com:9999/observer/"/>
+		
+		<x-card id="center_south" data-value="INVISIBLE"></x-card>
+		<x-card id="center_west" data-value="INVISIBLE"></x-card>
+		<x-card id="center_east" data-value="INVISIBLE"></x-card>
+		<x-card id="center_north" data-value="INVISIBLE"></x-card>
+
+		<x-fan id="fan_south">
+			<x-card data-value="CA"></x-card>
+			<x-card data-value="CA"></x-card>
+			<x-card data-value="CK"></x-card>
+			<x-card data-value="CK"></x-card>
+			<x-card data-value="CQ"></x-card>
+			<x-card data-value="CQ"></x-card>
+			<x-card data-value="CJ"></x-card>
+			<x-card data-value="CJ"></x-card>
+			<x-card data-value="C10"></x-card>
+			<x-card data-value="C10"></x-card>
+			<x-card data-value="C9"></x-card>
+			<x-card data-value="C9"></x-card>
+		</x-fan>
+		<x-fan id="fan_west">
+			<x-card data-value="SA"></x-card>
+			<x-card data-value="SA"></x-card>
+			<x-card data-value="SK"></x-card>
+			<x-card data-value="SK"></x-card>
+			<x-card data-value="SQ"></x-card>
+			<x-card data-value="SQ"></x-card>
+			<x-card data-value="SJ"></x-card>
+			<x-card data-value="SJ"></x-card>
+			<x-card data-value="S10"></x-card>
+			<x-card data-value="S10"></x-card>
+			<x-card data-value="S9"></x-card>
+			<x-card data-value="S9"></x-card>
+		</x-fan>
+		<x-fan id="fan_east">
+			<x-card data-value="HA"></x-card>
+			<x-card data-value="HA"></x-card>
+			<x-card data-value="HK"></x-card>
+			<x-card data-value="HK"></x-card>
+			<x-card data-value="HQ"></x-card>
+			<x-card data-value="HQ"></x-card>
+			<x-card data-value="HJ"></x-card>
+			<x-card data-value="HJ"></x-card>
+			<x-card data-value="H10"></x-card>
+			<x-card data-value="H10"></x-card>
+			<x-card data-value="H9"></x-card>
+			<x-card data-value="H9"></x-card>
+		</x-fan>
+		<x-fan id="fan_north">
+			<x-card data-value="DA"></x-card>
+			<x-card data-value="DA"></x-card>
+			<x-card data-value="DK"></x-card>
+			<x-card data-value="DK"></x-card>
+			<x-card data-value="DQ"></x-card>
+			<x-card data-value="DQ"></x-card>
+			<x-card data-value="DJ"></x-card>
+			<x-card data-value="DJ"></x-card>
+			<x-card data-value="D10"></x-card>
+			<x-card data-value="D10"></x-card>
+			<x-card data-value="D9"></x-card>
+			<x-card data-value="D9"></x-card>
+		</x-fan>
+
+	</body>
+</html>

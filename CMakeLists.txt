@@ -27,6 +27,7 @@ target_link_libraries(DoppelkopfUI PRIVATE doppelkopf)
 ##########################################################################################
 
 #Needs boost: sudo apt-get install libboost-all-dev
+#Needs OpenSSL: sudo apt-get install libssl-dev
 FetchContent_Declare(
 	simple_websocket_server_lib
 	GIT_REPOSITORY https://gitlab.com/eidheim/Simple-WebSocket-Server.git

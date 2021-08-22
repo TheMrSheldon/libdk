@@ -4,6 +4,8 @@
 #include <cctype>
 #include <vector>
 
+using namespace std::literals::string_literals;
+
 //Taken from here: https://stackoverflow.com/a/6245777
 namespace aux {
 	template<std::size_t...>
@@ -33,6 +35,7 @@ namespace aux {
 		case dki::CommandID::Log: return "log";
 		case dki::CommandID::SetState: return "setstate";
 		case dki::CommandID::HasReservations: return "reservations?";
+		case dki::CommandID::GetAction: return "action?";
 		default: return "";
 		}
 	}
@@ -92,8 +95,25 @@ namespace dki {
 	}
 
 	template<CommandID cmd, typename... Args>
-	const dki_stream& dki_stream::operator>>(Command<cmd, Args...>& command) const noexcept {
-		readTuple(command.args, aux::gen_seq<sizeof...(Args)>());
+	const dki_stream& dki_stream::operator>>(Command<cmd, Args...>& command) noexcept {
+		aux::readTuple(*this, command.args, aux::gen_seq<sizeof...(Args)>());
+		return *this;
+	}
+
+	const dki_stream& dki_stream::operator>>(AnyCommand& command) noexcept {
+		std::string name;
+		*this >> name;
+		if ("log"s.compare(name) == 0) {
+			LogCmd cmd;
+			*this >> cmd;
+			command = cmd;
+		} else if ("place"s.compare(name) == 0) {
+			PlacementActionCmd cmd;
+			*this >> cmd;
+			command = cmd;
+		} else {
+			//TODO: throw exception
+		}
 		return *this;
 	}
 
@@ -115,7 +135,36 @@ namespace dki {
 		return *this;
 	}
 
+	const dki_stream& dki_stream::operator>>(dk::Card& c) const noexcept {
+		char ch;
+		istream >> ch;
+		switch (ch) {
+		case 'C': c.suit = dk::Suit::Club; break;
+		case 'S': c.suit = dk::Suit::Spade; break;
+		case 'H': c.suit = dk::Suit::Heart; break;
+		case 'D': c.suit = dk::Suit::Diamond; break;
+		default: //TODO: throw exception
+			break;
+		}
+		istream >> ch;
+		switch (ch) {
+		case 'K': c.value = dk::Value::King; break;
+		case 'Q': c.value = dk::Value::Queen; break;
+		case 'J': c.value = dk::Value::Jack; break;
+		case '1':
+			char tmp;
+			istream >> tmp;
+			//assert(tmp == '0');
+			c.value = dk::Value::Ten; break;
+		case '9': c.value = dk::Value::Nine; break;
+		default: //TODO: throw exception
+			break;
+		}
+		return *this;
+	}
+
 	template const dki_stream& dki_stream::operator<<(const LogCmd& command) const noexcept;
 	template const dki_stream& dki_stream::operator<<(const SetStateCmd& command) const noexcept;
 	template const dki_stream& dki_stream::operator<<(const HasReservationsCmd& command) const noexcept;
+	template const dki_stream& dki_stream::operator<<(const GetActionCmd& command) const noexcept;
 } // namespace dki

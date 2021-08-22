@@ -33,7 +33,8 @@ void Doppelkopf::setupGame() noexcept {
 }
 
 void Doppelkopf::handleReservations() noexcept {
-	std::vector<std::reference_wrapper<Player>> reservations;
+	//Following is temporarily disabled
+	/*std::vector<std::reference_wrapper<Player>> reservations;
 	for (int i = 0; i < players.size(); ++i) {
 		auto& player = players[i];
 		if (player.get().hasReservations()) {
@@ -41,7 +42,7 @@ void Doppelkopf::handleReservations() noexcept {
 			for (auto p : players)
 				p.get().notifyHasReservation(i);
 		}
-	}
+	}*/
 	//TODO: check the reservations
 	state.setGameMode<dk::gm::Default>(); //ignoring the reservations for now
 }
@@ -50,6 +51,8 @@ Doppelkopf::Doppelkopf(Player& player1, Player& player2, Player& player3, Player
 
 void Doppelkopf::addObserver(Observer& observer) noexcept {
 	observers.emplace_back(observer);
+	//Tell the new observer about the current state
+	observer.notifyStateUpdate(state);
 }
 
 void Doppelkopf::runGame() noexcept {
@@ -57,17 +60,32 @@ void Doppelkopf::runGame() noexcept {
 	setupGame();
 	handleReservations();
 	while (!state.isGameOver()) {
+		std::cout << "[New Round]" << std::endl;
 		while (!state.isRoundOver()) {
-			auto& player = players[state.getTurn()].get();
+			std::cout << "turn: " << state.getTurn() << std::endl;
+			auto turn = state.getTurn();
+			auto& player = players[turn].get();
 			const auto action = player.getAction();
 			switch (action.getType()) {
 			case ActionType::AnnounceReContra:
 				//TODO: implement
 				break;
 			case ActionType::PlaceCard:
-				state.placeCard(action.getPlacedCard());
+				if (state.placeCard(action.getPlacedCard())) {
+					//Inform players and observers
+					player.setState(turn, state.getPlayerState(turn).hand);
+					std::for_each(std::begin(players), std::end(players), [turn, action](auto& p){p.get().notifyPlaceCard(turn, action.getPlacedCard());});
+					std::for_each(std::begin(observers), std::end(observers), [turn, action](auto& o){o.get().notifyPlaceCard(turn, action.getPlacedCard());});
+				} else {
+					//Illegal Turn
+				}
 				break;
 			}
 		}
+		auto winner = state.getRoundWinner();
+		std::array<Card, 4> center = {state.getPlacedCard(0).value(), state.getPlacedCard(1).value(), state.getPlacedCard(2).value(), state.getPlacedCard(3).value()};
+		std::for_each(std::begin(players), std::end(players), [winner, center](auto& p){p.get().notifyRoundEnd(winner, center);});
+		std::for_each(std::begin(observers), std::end(observers), [winner, center](auto& o){o.get().notifyRoundEnd(winner, center);});
+		state.nextRound();
 	}
 }

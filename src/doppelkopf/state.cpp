@@ -13,6 +13,13 @@ static inline bool contains(const C& vec, const T& element) noexcept {
 	return std::find(std::begin(vec), std::end(vec), element) != std::end(vec);
 }
 
+template<typename C, typename T>
+static inline bool remove_first(C& vec, const T& element) noexcept {
+	auto it = std::find(std::begin(vec), std::end(vec), element);
+	if (it != std::end(vec)) vec.erase(it);
+	return it != std::end(vec);
+}
+
 State::State() noexcept : gamemode(std::nullopt) {}
 
 State::PlayerState& State::getPlayerState(uint index) noexcept(false) {
@@ -57,17 +64,17 @@ bool State::isLegal(Card card) const noexcept {
 		const bool cardServes = isFirstPlayer || gamemode->get()->serves(getPlacedCard(firstPlayer).value(), card);
 		return playerHasCard && !(playerMustServe && !cardServes);
 	} catch(std::exception const& e) {
+		//TODO: log error
 		return false;
 	}
 }
 
 bool State::placeCard(Card card) noexcept {
-	bool legal = isLegal(card);
+	bool legal = !isRoundOver() && isLegal(card);
 	if (legal) {
-		if (isRoundOver())
-			nextRound();
-		else
-			playersTurn = (playersTurn+1) % static_cast<int>(playerStates.size());
+		remove_first(getPlayerState(playersTurn).hand, card);
+		getPlayerState(playersTurn).placed = card;
+		playersTurn = (playersTurn+1) % static_cast<int>(playerStates.size());
 	}
 	return legal;
 }
