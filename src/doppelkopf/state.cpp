@@ -52,7 +52,7 @@ void State::nextRound() noexcept {
 		getPlayerState(winner).score += pips;
 		for (auto&& p : playerStates)
 			p.placed = std::nullopt;
-		playersTurn = winner;
+		firstPlayer = playersTurn = winner;
 	}
 }
 

@@ -1,5 +1,7 @@
 #include <doppelkopf/interface/dki_stream.h>
 
+#include <doppelkopf/doppelkopf.h>
+
 #include <algorithm>
 #include <cctype>
 #include <vector>
@@ -54,22 +56,7 @@ namespace dki {
 		return *this;
 	}
 	const dki_stream& dki_stream::operator<<(const dk::Card& card) const noexcept {
-		switch (card.suit){
-			case dk::Suit::Club: ostream << 'C'; break;
-			case dk::Suit::Spade: ostream << 'S'; break;
-			case dk::Suit::Heart: ostream << 'H'; break;
-			case dk::Suit::Diamond: ostream << 'D'; break;
-			default: ostream <<  '-'; break;
-		}
-		switch(card.value) {
-			case dk::Value::Ace: ostream << 'A'; break;
-			case dk::Value::King: ostream << 'K'; break;
-			case dk::Value::Queen: ostream << 'Q'; break;
-			case dk::Value::Jack: ostream << 'J'; break;
-			case dk::Value::Ten: ostream << "10"; break;
-			case dk::Value::Nine: ostream << '9'; break;
-			default: ostream << '-'; break;
-		}
+		ostream << dk::to_string(card);
 		return *this;
 	}
 	const dki_stream& dki_stream::operator<<(const bool& b) const noexcept {

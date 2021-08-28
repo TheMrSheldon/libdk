@@ -26,8 +26,6 @@ class DKWSInterface {
 				card.dataset['value'] = card_value;
 				element.appendChild(card);
 			});
-			console.log(element);
-
 		}
 	}
 

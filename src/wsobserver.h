@@ -21,27 +21,6 @@ namespace dki {
 		using json = nlohmann::json;
 
 		const wsconnection_ptr endpoint;
-		
-		static std::string to_string(dk::Card card) noexcept {
-			std::string str = "";
-			switch (card.suit){
-				case dk::Suit::Club: str += 'C'; break;
-				case dk::Suit::Spade: str += 'S'; break;
-				case dk::Suit::Heart: str += 'H'; break;
-				case dk::Suit::Diamond: str += 'D'; break;
-				default: str += '-'; break;
-			}
-			switch(card.value) {
-				case dk::Value::Ace: str += 'A'; break;
-				case dk::Value::King: str += 'K'; break;
-				case dk::Value::Queen: str += 'Q'; break;
-				case dk::Value::Jack: str += 'J'; break;
-				case dk::Value::Ten: str += "10"; break;
-				case dk::Value::Nine: str += '9'; break;
-				default: str += '-'; break;
-			}
-			return str;
-		}
 	public:
 		WSObserver(wsconnection_ptr endpoint) : endpoint(endpoint) {}
 
@@ -54,7 +33,7 @@ namespace dki {
 			for (auto player = 0; player < dk::Doppelkopf::NumPlayers; ++player) {
 				const auto& hand = state.getHand(player);
 				std::vector<std::string> cards;
-				std::transform(std::begin(hand), std::end(hand), std::back_inserter(cards), to_string);
+				std::transform(std::begin(hand), std::end(hand), std::back_inserter(cards), dk::to_string);
 				packet["hands"][player] = cards;
 			}
 			endpoint->send(packet.dump());
@@ -73,7 +52,7 @@ namespace dki {
 			packet["type"] = "round_end";
 			packet["winner"] = winner;
 			std::vector<std::string> cardsStr;
-			std::transform(std::begin(cards), std::end(cards), std::back_inserter(cardsStr), to_string);
+			std::transform(std::begin(cards), std::end(cards), std::back_inserter(cardsStr), dk::to_string);
 			packet["cards"] = cardsStr;
 			endpoint->send(packet.dump());
 		}

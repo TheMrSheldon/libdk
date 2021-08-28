@@ -1,0 +1,76 @@
+<html>
+	<head>
+		<script src="cards.js"></script>
+		<script src="dki_ws_player.js"></script>
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="cards.css">
+		<title>Doppelkopf - WebSocket Player</title>
+	</head>
+	<body>
+		<h1>Doppelkopf &ndash; Player</h1>
+		Address: <input placeholder="wss://www.example.com:9999/player/0"/>
+		
+		<x-card id="center_south" data-value="INVISIBLE"></x-card>
+		<x-card id="center_west" data-value="INVISIBLE"></x-card>
+		<x-card id="center_east" data-value="INVISIBLE"></x-card>
+		<x-card id="center_north" data-value="INVISIBLE"></x-card>
+
+		<x-fan id="fan_south">
+			<x-card class="clickable" data-value="CA"></x-card>
+			<x-card class="clickable" data-value="CA"></x-card>
+			<x-card class="clickable" data-value="CK"></x-card>
+			<x-card class="clickable" data-value="CK"></x-card>
+			<x-card class="clickable" data-value="CQ"></x-card>
+			<x-card class="clickable" data-value="CQ"></x-card>
+			<x-card class="clickable" data-value="CJ"></x-card>
+			<x-card class="clickable" data-value="CJ"></x-card>
+			<x-card class="clickable" data-value="C10"></x-card>
+			<x-card class="clickable" data-value="C10"></x-card>
+			<x-card class="clickable" data-value="C9"></x-card>
+			<x-card class="clickable" data-value="C9"></x-card>
+		</x-fan>
+		<x-fan id="fan_west">
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+		</x-fan>
+		<x-fan id="fan_east">
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+		</x-fan>
+		<x-fan id="fan_north">
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+			<x-card data-value="HIDDEN"></x-card>
+		</x-fan>
+
+	</body>
+</html>

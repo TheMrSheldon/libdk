@@ -8,6 +8,7 @@
 #include <array>
 #include <cstdint>
 #include <functional>
+#include <string>
 #include <vector>
 
 /** @file
@@ -65,6 +66,22 @@ namespace dk {
 		 */
 		void runGame() noexcept;
 	};
+
+	/**
+	 * @brief TODO: documentation
+	 * 
+	 * @param card 
+	 * @return std::string 
+	 */
+	std::string to_string(const dk::Card& card) noexcept;
+
+	/**
+	 * @brief TODO: documentation
+	 * 
+	 * @param string 
+	 * @return dk::Card 
+	 */
+	dk::Card str_to_card(const std::string& string) noexcept;
 } // namespace dk
 
 #endif
