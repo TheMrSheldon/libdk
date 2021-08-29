@@ -74,9 +74,9 @@ void Doppelkopf::runGame() noexcept {
 			case ActionType::PlaceCard:
 				if (state.placeCard(action.getPlacedCard())) {
 					//Inform players and observers
-					player.setState(turn, state.getPlayerState(turn).hand);
 					std::for_each(std::begin(players), std::end(players), [turn, action](auto& p){p.get().notifyPlaceCard(turn, action.getPlacedCard());});
 					std::for_each(std::begin(observers), std::end(observers), [turn, action](auto& o){o.get().notifyPlaceCard(turn, action.getPlacedCard());});
+					player.setState(turn, state.getPlayerState(turn).hand);
 				} else {
 					//Illegal Turn
 				}

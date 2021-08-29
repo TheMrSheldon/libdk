@@ -28,20 +28,22 @@ namespace dki {
 		std::thread thread;
 		wsconnection_ptr connection;
 
+		std::promise<nullptr_t> endpointConnected;
 		std::promise<dki::AnyCommand> response;
 	public:
 		WSPlayer(int port, int playerindex) : endpoint(server.endpoint[std::string("^/player/player")+std::to_string(playerindex)+std::string("?$")]) {
 			server.config.port = port;
 			endpoint.on_open = [this](std::shared_ptr<wsconnection> connection) {
 				this->connection = connection;
+				endpointConnected.set_value(nullptr);
 			};
 			endpoint.on_message = [this](std::shared_ptr<wsconnection> connection, std::shared_ptr<wsserver::InMessage> in_message) {
 				std::cout << "Server: Message received: \"" << in_message->string() << "\" from " << connection.get() << std::endl;
 				auto message = json::parse(in_message->string());
 				handleMessage(message);
 			};
-			endpoint.on_close = [](std::shared_ptr<wsconnection> connection, int code, const std::string& message) {
-				//TODO: remove and destroy associated observer
+			endpoint.on_close = [this](std::shared_ptr<wsconnection> connection, int code, const std::string& message) {
+				endpointConnected = {};
 			};
 
 			std::promise<unsigned short> server_port;
@@ -52,7 +54,12 @@ namespace dki {
 				});
 			});
 			thread.detach();
-			std::cout << "Server listening on port " << server_port.get_future().get() << std::endl;
+			std::string hostname = "localhost";//TODO: retrieve ip
+			std::cout << "Tell player " << playerindex << " to connect to ws://" << hostname << ':' << server_port.get_future().get() << "/player/player" << playerindex << std::endl;
+		}
+
+		void waitForConnection() {
+			endpointConnected.get_future().get();
 		}
 
 		virtual bool hasReservations() override {
@@ -72,8 +79,14 @@ namespace dki {
 			connection->send(packet.dump());
 		}
 
-		virtual void notifyRoundEnd(int winner, std::array<dk::Card, 4> cards) override {
-			//TODO: implement
+		virtual void notifyRoundEnd(int winner, std::array<dk::Card, 4> center) override {
+			json packet;
+			packet["type"] = "roundend";
+			packet["winner"] = winner;
+			std::vector<std::string> cards;
+			std::transform(std::begin(center), std::end(center), std::back_inserter(cards), dk::to_string);
+			packet["center"] = cards;
+			connection->send(packet.dump());
 		}
 		
 		virtual void setState(int pos, std::vector<dk::Card> hand) override {

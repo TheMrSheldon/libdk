@@ -2,9 +2,12 @@
 class DKWSInterface {
 	playerhands = ["south", "west", "north", "east"];
 	myindex = -1;
+	turn = 0;
 
 	constructor(endpoint) {
-		this.callbacks = {'stateupdate': this.onStateUpdateMsg.bind(this), 'place': this.onPlacementMsg.bind(this), 'getaction': this.onGetActionMsg.bind(this)}
+		this.callbacks = {
+			'stateupdate': this.onStateUpdateMsg.bind(this), 'place': this.onPlacementMsg.bind(this), 'getaction': this.onGetActionMsg.bind(this), 'roundend': this.onRoundEndMsg.bind(this)
+		}
 
 		this.socket = new WebSocket(endpoint);
 		this.socket.binaryType = "arraybuffer";
@@ -38,12 +41,22 @@ class DKWSInterface {
 		center.dataset['value'] = "SLOT";
 		var card = hand.querySelector(`[data-value="${packet.card}"], [data-value="HIDDEN"]`);
 		card.dataset['value'] = packet.card;
+		center.style.zIndex = this.turn;
 		card.moveTo(center);
+		this.turn = this.turn+1;
 	}
 
 	onGetActionMsg(packet) {
 		var hand = document.getElementById(`fan_${this.playerhands[this.myindex]}`);
 		hand.style.opacity = 1;
+	}
+
+	onRoundEndMsg(packet) {
+		this.turn = 0;
+		for (i = 0; i < 4; i++) {
+			var center = document.getElementById(`center_${this.playerhands[i]}`);
+			center.dataset['value'] = "INVISIBLE";
+		}
 	}
 
 	placeCard(card) {
