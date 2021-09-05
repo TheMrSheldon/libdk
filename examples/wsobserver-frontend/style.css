@@ -8,16 +8,31 @@ body {
 .third { z-index: 2; }
 .fourth { z-index: 3; }
 
+#board {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	grid-template-rows: auto 1fr auto;
+	grid-template-areas:
+		'west north east'
+		'west center east'
+		'west south east';
+	position: absolute;
+	top: 0pt;
+	bottom: 0pt;
+	left: 0pt;
+	right: 0pt;
+}
+
 x-card#center_north,
 x-card#center_south,
 x-card#center_west,
 x-card#center_east {
 	position: absolute;
-    margin: auto;
-    top: 0pt;
-    left: 0pt;
-    right: 0pt;
-    bottom: 0pt;
+	margin: auto;
+	top: 0pt;
+	left: 0pt;
+	right: 0pt;
+	bottom: 0pt;
 }
 x-card#center_south {
 	transform: translateY(60pt) translateX(10pt) rotateZ(175deg);
@@ -32,36 +47,94 @@ x-card#center_east {
 	transform: translateX(60pt) translateZ(-10pt) rotateZ(-95deg);
 }
 
-x-fan#fan_south,
-x-fan#fan_north,
-x-fan#fan_west,
-x-fan#fan_east {
+div#player_south,
+div#player_north,
+div#player_west,
+div#player_east {
+	display: grid;
+	position: relative;
+}
+div#player_south {
+	grid-area: south;
+}
+
+div#player_north {
+	grid-area: north;
+}
+
+div#player_west {
+	grid-area: west;
+}
+
+div#player_east {
+	grid-area: east;
+}
+
+div#player_south>x-fan,
+div#player_north>x-fan {
+	margin: 0pt auto;
+}
+div#player_west>x-fan,
+div#player_east>x-fan {
+	margin: auto 0pt;
+}
+
+.playername {
 	position: absolute;
-    margin: auto;
-}
-x-fan#fan_south {
-    bottom: -20pt;
-    left: 0pt;
-    right: 0pt;
-}
-
-x-fan#fan_north {
-    top: -20pt;
-    left: 0pt;
-    right: 0pt;
-	transform: rotateZ(180deg);
+    font-size: 20pt;
+    padding: 1pt 10pt;
+    z-index: 1;
+    background-color: rgba(.5,.5,.5,.5);
+    border: solid black 2pt;
+    border-radius: 5pt;
 }
 
-x-fan#fan_west {
-    left: -20pt;
+#player_north>.playername,
+#player_south>.playername {
+	margin: 30pt auto;
+	width: max-content;
+}
+#player_west>.playername,
+#player_east>.playername {
+	margin: auto 30pt;
+	height: max-content;
+	/*writing-mode: vertical-rl;*/
+}
+
+#player_north>.playername {
+	left: 0pt;
+	right: 0pt;
     top: 0pt;
+}
+#player_south>.playername {
+	left: 0pt;
+	right: 0pt;
     bottom: 0pt;
-	transform: rotateZ(90deg);
+}
+#player_west>.playername {
+	left: 0pt;
+	top: 0pt;
+	bottom: 0pt;
+}
+#player_east>.playername {
+	right: 0pt;
+	top: 0pt;
+	bottom: 0pt;
 }
 
-x-fan#fan_east {
-    right: -20pt;
-    top: 0pt;
-    bottom: 0pt;
-	transform: rotateZ(-90deg);
+x-badge {
+    font-size: small;
+    vertical-align: middle;
+    border-radius: 4pt;
+    font-family: monospace;
+    font-weight: bold;
+    padding: 2pt 4pt;
+}
+
+x-badge[data-type='turn'] {
+	background-color: rgb(0, 200, 0);
+}
+
+x-badge[data-type='turn']::before {
+	content: "turn";
 }

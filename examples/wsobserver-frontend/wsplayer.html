@@ -1,5 +1,7 @@
+<!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="utf-8">
 		<script src="cards.js"></script>
 		<script src="dki_ws_player.js"></script>
 		<link rel="stylesheet" href="style.css">
@@ -9,68 +11,82 @@
 	<body>
 		<h1>Doppelkopf &ndash; Player</h1>
 		Address: <input placeholder="wss://www.example.com:9999/player/0"/>
-		
-		<x-card id="center_south" data-value="INVISIBLE"></x-card>
-		<x-card id="center_west" data-value="INVISIBLE"></x-card>
-		<x-card id="center_east" data-value="INVISIBLE"></x-card>
-		<x-card id="center_north" data-value="INVISIBLE"></x-card>
 
-		<x-fan id="fan_south">
-			<x-card class="clickable" data-value="CA"></x-card>
-			<x-card class="clickable" data-value="CA"></x-card>
-			<x-card class="clickable" data-value="CK"></x-card>
-			<x-card class="clickable" data-value="CK"></x-card>
-			<x-card class="clickable" data-value="CQ"></x-card>
-			<x-card class="clickable" data-value="CQ"></x-card>
-			<x-card class="clickable" data-value="CJ"></x-card>
-			<x-card class="clickable" data-value="CJ"></x-card>
-			<x-card class="clickable" data-value="C10"></x-card>
-			<x-card class="clickable" data-value="C10"></x-card>
-			<x-card class="clickable" data-value="C9"></x-card>
-			<x-card class="clickable" data-value="C9"></x-card>
-		</x-fan>
-		<x-fan id="fan_west">
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-		</x-fan>
-		<x-fan id="fan_east">
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-		</x-fan>
-		<x-fan id="fan_north">
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-			<x-card data-value="HIDDEN"></x-card>
-		</x-fan>
-
+		<div id="board">
+			<div id="player_north">
+				<span class="playername">Player North</span>
+				<x-fan id="fan_north" data-angle="180">
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+				</x-fan>
+			</div>
+			<div id="player_west">
+				<span class="playername">Player West</span>
+				<x-fan id="fan_west" data-angle="-90">
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+				</x-fan>
+			</div>
+			<div style="grid-area: center">
+				<x-card id="center_south" data-value="INVISIBLE"></x-card>
+				<x-card id="center_west" data-value="INVISIBLE"></x-card>
+				<x-card id="center_east" data-value="INVISIBLE"></x-card>
+				<x-card id="center_north" data-value="INVISIBLE"></x-card>
+			</div>
+			<div id="player_east">
+				<span class="playername">Player East</span>
+				<x-fan id="fan_east" data-angle="90">
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+					<x-card data-value="HIDDEN"></x-card>
+				</x-fan>
+			</div>
+			<div id="player_south">
+				<span class="playername">Player South <x-badge data-type="turn"></span>
+				<x-fan id="fan_south" data-angle="0">
+					<x-card class="clickable" data-value="CA"></x-card>
+					<x-card class="clickable" data-value="CA"></x-card>
+					<x-card class="clickable" data-value="CK"></x-card>
+					<x-card class="clickable" data-value="CK"></x-card>
+					<x-card class="clickable" data-value="CQ"></x-card>
+					<x-card class="clickable" data-value="CQ"></x-card>
+					<x-card class="clickable" data-value="CJ"></x-card>
+					<x-card class="clickable" data-value="CJ"></x-card>
+					<x-card class="clickable" data-value="C10"></x-card>
+					<x-card class="clickable" data-value="C10"></x-card>
+					<x-card class="clickable" data-value="C9"></x-card>
+					<x-card class="clickable" data-value="C9"></x-card>
+				</x-fan>
+			</div>
+		</div>
 	</body>
 </html>

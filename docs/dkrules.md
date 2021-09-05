@@ -34,7 +34,7 @@ TODO:
 ## Wedding
 TODO:
 
-## Pigglets
+## Piglets
 TODO:
 
 # Sources

@@ -56,7 +56,7 @@ State   | *TODO*
 * **`solo?` \[U&rarr;E\]** &ndash; The user interface checks if the engine wants to announce a solo<br/>
     *TODO: long description*
 
-* **`pigglets?` \[U&rarr;E\]** &ndash; The user interface checks if the engine wants to announce pigglets<br/>
+* **`piglets?` \[U&rarr;E\]** &ndash; The user interface checks if the engine wants to announce piglets<br/>
     *TODO: long description*
 
 * **`wedding?` \[U&rarr;E\]** &ndash; The user interface checks if the engine wants to announce a wedding<br/>

@@ -9,7 +9,8 @@ German       | English
 Trumpf       | Trump
 Fehlfarbe    | Offcolor
 Hochzeit     | Mariage
-Schweinchen  | Pigglets
+Schweinchen  | Piglets
+Stich        | Trick
 Dullen       | -
 Alten        | -
 Ansage       | Announcement
