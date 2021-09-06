@@ -1,8 +1,5 @@
 
 class DKWSInterface {
-	playerhands = ["south", "west", "north", "east"];
-	myindex = -1;
-	turn = 0;
 
 	constructor(endpoint) {
 		this.callbacks = {
@@ -21,50 +18,30 @@ class DKWSInterface {
 	}
 
 	onStateUpdateMsg(packet) {
-		this.myindex = packet.position;
-		var myfan = document.getElementById(`fan_${this.playerhands[this.myindex]}`);
-		myfan.querySelectorAll('*').forEach(n => n.remove());
-		
-		packet.hand.forEach(card_value => {
-			var card = new HTMLCard();
-			card.dataset['value'] = card_value;
-			card.className = 'clickable';
-			card.onclick = () => {this.placeCard(card_value);};
-			myfan.appendChild(card);
-		});
-		myfan.style.opacity = .5;
-	}
-
-	onPlacementMsg(packet) {
-		var hand = document.getElementById(`fan_${this.playerhands[packet.player]}`);
-		var center = document.getElementById(`center_${this.playerhands[packet.player]}`);
-		center.dataset['value'] = "SLOT";
-		var card = hand.querySelector(`[data-value="${packet.card}"], [data-value="HIDDEN"]`);
-		card.dataset['value'] = packet.card;
-		center.style.zIndex = this.turn;
-		card.moveTo(center);
-		this.turn = this.turn+1;
-	}
-
-	onGetActionMsg(packet) {
-		var hand = document.getElementById(`fan_${this.playerhands[this.myindex]}`);
-		hand.style.opacity = 1;
-	}
-
-	onRoundEndMsg(packet) {
-		this.turn = 0;
-		for (i = 0; i < 4; i++) {
-			var center = document.getElementById(`center_${this.playerhands[i]}`);
-			center.dataset['value'] = "INVISIBLE";
+		board.setLocalPlayer(packet.position)
+		board.setHand(packet.position, packet.hand, (playerIdx, cardStr) => {this.placeCard(cardStr)})
+		board.getHand(board.localPlayer).style.opacity = .5
+		for (var i = 0; i < 4; ++i) {
+			board.setPlayerName(i, `Player ${i}`)
 		}
 	}
 
-	placeCard(card) {
-		var packet = {type: 'place', card: card};
+	onPlacementMsg(packet) {
+		board.placeCard(packet.player, packet.card)
+		board.getHand(board.localPlayer).style.opacity = .5
+	}
+
+	onGetActionMsg(packet) {
+		board.getHand(board.localPlayer).style.opacity = 1;
+	}
+
+	onRoundEndMsg(packet) {
+		board.setRoundEnded()
+	}
+
+	placeCard(cardStr) {
+		var packet = {type: 'place', card: cardStr};
 		this.socket.send(JSON.stringify(packet));
-		
-		var hand = document.getElementById(`fan_${this.playerhands[this.myindex]}`);
-		hand.style.opacity = .5;
 	}
 
 	announcement() {
