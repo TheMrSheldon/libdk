@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="cards.js"></script>
+		<script src="dk_playspace.js"></script>
+		<script src="dki_ws_observer.js"></script>
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="cards.css">
+		<title>Doppelkopf - WebSocket Observer</title>
+	</head>
+	<body>
+		<h1>Doppelkopf &ndash; Observer</h1>
+		Address: <input placeholder="wss://www.example.com:9999/observer/"/>
+
+		<div id="board">
+			<div id="player_north">
+				<span class="playername">Player North</span>
+				<x-fan id="fan_north" data-angle="180">
+					<x-card data-value="DA"></x-card>
+					<x-card data-value="DA"></x-card>
+					<x-card data-value="DK"></x-card>
+					<x-card data-value="DK"></x-card>
+					<x-card data-value="DQ"></x-card>
+					<x-card data-value="DQ"></x-card>
+					<x-card data-value="DJ"></x-card>
+					<x-card data-value="DJ"></x-card>
+					<x-card data-value="D10"></x-card>
+					<x-card data-value="D10"></x-card>
+					<x-card data-value="D9"></x-card>
+					<x-card data-value="D9"></x-card>
+				</x-fan>
+			</div>
+			<div id="player_west">
+				<span class="playername">Player West</span>
+				<x-fan id="fan_west" data-angle="-90">
+					<x-card data-value="SA"></x-card>
+					<x-card data-value="SA"></x-card>
+					<x-card data-value="SK"></x-card>
+					<x-card data-value="SK"></x-card>
+					<x-card data-value="SQ"></x-card>
+					<x-card data-value="SQ"></x-card>
+					<x-card data-value="SJ"></x-card>
+					<x-card data-value="SJ"></x-card>
+					<x-card data-value="S10"></x-card>
+					<x-card data-value="S10"></x-card>
+					<x-card data-value="S9"></x-card>
+					<x-card data-value="S9"></x-card>
+				</x-fan>
+			</div>
+			<div style="grid-area: center">
+				<x-card id="center_south" data-value="INVISIBLE"></x-card>
+				<x-card id="center_west" data-value="INVISIBLE"></x-card>
+				<x-card id="center_east" data-value="INVISIBLE"></x-card>
+				<x-card id="center_north" data-value="INVISIBLE"></x-card>
+			</div>
+			<div id="player_east">
+				<span class="playername">Player East</span>
+				<x-fan id="fan_east" data-angle="90">
+					<x-card data-value="HA"></x-card>
+					<x-card data-value="HA"></x-card>
+					<x-card data-value="HK"></x-card>
+					<x-card data-value="HK"></x-card>
+					<x-card data-value="HQ"></x-card>
+					<x-card data-value="HQ"></x-card>
+					<x-card data-value="HJ"></x-card>
+					<x-card data-value="HJ"></x-card>
+					<x-card data-value="H10"></x-card>
+					<x-card data-value="H10"></x-card>
+					<x-card data-value="H9"></x-card>
+					<x-card data-value="H9"></x-card>
+				</x-fan>
+			</div>
+			<div id="player_south">
+				<span class="playername">Player South <x-badge data-type="turn"></span>
+				<x-fan id="fan_south" data-angle="0">
+					<x-card data-value="CA"></x-card>
+					<x-card data-value="CA"></x-card>
+					<x-card data-value="CK"></x-card>
+					<x-card data-value="CK"></x-card>
+					<x-card data-value="CQ"></x-card>
+					<x-card data-value="CQ"></x-card>
+					<x-card data-value="CJ"></x-card>
+					<x-card data-value="CJ"></x-card>
+					<x-card data-value="C10"></x-card>
+					<x-card data-value="C10"></x-card>
+					<x-card data-value="C9"></x-card>
+					<x-card data-value="C9"></x-card>
+				</x-fan>
+			</div>
+		</div>
+	</body>
+</html>

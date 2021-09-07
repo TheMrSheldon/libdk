@@ -30,6 +30,14 @@ namespace dk {
 		 * @param card the card that was placed.
 		 */
 		virtual void notifyPlaceCard(int player, Card card) noexcept = 0;
+		
+		/**
+		 * @brief TODO: documentation
+		 * 
+		 * @param winner 
+		 * @param cards 
+		 */
+		virtual void notifyRoundEnd(int winner, std::array<Card, 4> cards) = 0;
 
 		/**
 		 * @brief Notifies the observer that a player made an announcement.

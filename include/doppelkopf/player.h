@@ -4,6 +4,7 @@
 #include "action.h"
 #include "card.h"
 
+#include <array>
 #include <vector>
 
 /** @file
@@ -33,12 +34,28 @@ namespace dk {
 		virtual void notifyHasReservation(unsigned player) = 0;
 
 		/**
+		 * @brief TODO: documentation
+		 * 
+		 * @param player 
+		 * @param card 
+		 */
+		virtual void notifyPlaceCard(unsigned player, Card card) = 0;
+
+		/**
 		 * @brief Notifies the player about the new game state.
 		 * 
 		 * @param pos 
 		 * @param cards 
 		 */
 		virtual void setState(int pos, std::vector<Card> cards) = 0;
+
+		/**
+		 * @brief TODO: documentation
+		 * 
+		 * @param winner 
+		 * @param cards 
+		 */
+		virtual void notifyRoundEnd(int winner, std::array<Card, 4> cards) = 0;
 
 		/**
 		 * @brief Asks the player to choose his action.

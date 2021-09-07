@@ -5,6 +5,7 @@
 
 #include <string>
 #include <tuple>
+#include <variant>
 #include <vector>
 
 /**
@@ -31,7 +32,7 @@ namespace dki {
 	 * @brief Used to uniquely identify commands-types.
 	 */
 	enum class CommandID {
-		Log, SetState, HasReservations
+		Log, SetState, HasReservations, Reservation, GetAction, PlacementAction, AnnouncementAction
 	};
 
 	/**
@@ -76,6 +77,25 @@ namespace dki {
 	 */
 	using HasReservationsCmd = Command<CommandID::HasReservations>;
 	
+	/**
+	 * @brief TODO: documentation
+	 */
+	using ReservationCmd = Command<CommandID::Reservation, bool>;
+
+	/**
+	 * @brief TODO: document the getaction command
+	 */
+	using GetActionCmd = Command<CommandID::GetAction>;
+
+	/**
+	 * @brief TODO: documentation
+	 */
+	using PlacementActionCmd = Command<CommandID::PlacementAction, dk::Card>;
+
+	/**
+	 * @brief TODO: documentation
+	 */
+	using AnyCommand = std::variant<std::monostate, LogCmd, SetStateCmd, HasReservationsCmd, ReservationCmd, GetActionCmd, PlacementActionCmd>;
 	///@}
 } // namespace dki
 

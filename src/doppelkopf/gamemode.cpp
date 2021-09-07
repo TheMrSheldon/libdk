@@ -11,19 +11,18 @@ bool Gamemode::isTrump(const Card& card) const noexcept {
 }
 
 bool Gamemode::serves(const Card& served, const Card& other) const noexcept {
-	return (isTrump(served) && isTrump(other)) ||
-		(served.suit == other.suit);
+	const bool noneTrump = !isTrump(served) && !isTrump(other);
+	const bool bothTrump = isTrump(served) && isTrump(other);
+	const bool sameSuit = served.suit == other.suit;
+	return bothTrump || (noneTrump && sameSuit);
 }
 
 bool Gamemode::beats(const Card& tobeat, const Card& other) const noexcept {
 	if (isTrump(tobeat) != isTrump(other)) //exactly one is trump
 		return isTrump(other);
 	return other > tobeat;
-	//FIXME: this does not work
+	//FIXME: this does not work for fleshless
 	//E.g.
-	// No-solo: queen of diamonds beats king of diamonds
-	// Fleshless: king of diamonds beats queen of diamonds
-	//E.g.
-	// No-solo: 10 of hearts beats ace of hearts
-	// Fleshless: ace of hearts beats 10 of hearts
+	// No-solo: 10 of hearts beats queen of hearts
+	// Fleshless: queen of hearts beats 10 of hearts
 }

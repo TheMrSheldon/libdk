@@ -44,7 +44,7 @@ namespace dki {
 		 */
 		template<CommandID cmd, typename... Args>
 		const dki_stream& operator<<(const Command<cmd, Args...>& command) const noexcept;
-
+		
 		/**
 		 * @brief TODO: document
 		 * 
@@ -54,7 +54,15 @@ namespace dki {
 		 * @return const dki_stream& 
 		 */
 		template<CommandID cmd, typename... Args>
-		const dki_stream& operator>>(Command<cmd, Args...>& command) const noexcept;
+		const dki_stream& operator>>(Command<cmd, Args...>& command) noexcept;
+
+		/**
+		 * @brief TODO: documentation
+		 * 
+		 * @param command 
+		 * @return const dki_stream& 
+		 */
+		const dki_stream& operator>>(AnyCommand& command) noexcept;
 		
 		/**
 		 * @brief TODO: document
@@ -105,6 +113,14 @@ namespace dki {
 		 * @return const dki_stream& 
 		 */
 		const dki_stream& operator>>(bool& b) const noexcept;
+
+		/**
+		 * @brief TODO: document
+		 * 
+		 * @param c 
+		 * @return const dki_stream& 
+		 */
+		const dki_stream& operator>>(dk::Card& c) const noexcept;
 	};
 } // namespace dki
 
