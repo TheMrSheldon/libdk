@@ -18,7 +18,7 @@ target_include_directories(doppelkopf PUBLIC
 	$<INSTALL_INTERFACE:include>
 )
 
-add_executable(DoppelkopfUI src/main.cpp)
+add_executable(DoppelkopfUI src/main.cpp src/interfaces/websocket/wsmanager.cpp src/interfaces/websocket/wsobserver.cpp src/interfaces/websocket/wsobservermanager.cpp src/interfaces/websocket/wsplayer.cpp)
 
 target_link_libraries(DoppelkopfUI PRIVATE doppelkopf)
 
