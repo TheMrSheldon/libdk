@@ -4,7 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/include/**",
-                "${workspaceFolder}/build/**"
+                "${workspaceFolder}/build/_deps/catch-src/include/",
+				"${workspaceFolder}/build/_deps/simple_websocket_server_lib-src"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
